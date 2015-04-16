@@ -34,7 +34,7 @@
     <h3>Example</h3>
     <p>It's really easy to use. Just include the egg.js file on the page...</p>
     <pre>&lt;script type="text/javascript" src="/path/to/egg.js"&gt;&lt;/script&gt;</pre>
-    <p>...then use the AddCode() function to add in your easter eggs. You need to pass it the list of keycodes (<a href="http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes">reference</a>), a function to trigger when it happens, and then an optional set of metadata, which can be anything from a string to an object. Hooks get access to the whole Egg.js object so you can pull information about the easter egg that fired via this.activeEgg</p>
+    <p>...then use the AddCode() function to add in your easter eggs. You need to pass it the list of keycodes (<a href="http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes">reference</a>), a function to trigger when it happens, and then an optional set of metadata, which can be anything from a string to an object. </p>
     <pre>
 var egg = new Egg();
 egg.AddCode("38,38,40,40,37,39,37,39,66,65", function() {
@@ -48,7 +48,7 @@ egg.AddHook(function(){
 });
 egg.Listen();
     </pre>
-    <p>You can also add a hook, as shown above, that will run after any egg code is triggered. You could use it to fire a Google Analytics event or send out a tweet that someone finally found your easter egg.</p>
+    <p>You can also add a hook, as shown above using AddHook(), that will run after any egg code is triggered. You could use it to fire a Google Analytics event or send out a tweet that someone finally found your easter egg. Hooks get access to the whole Egg.js object so you can pull information about the easter egg that fired via this.activeEgg</p>
     <h3>Why?</h3>
     <p>I put an easter egg in pretty much everything I make and after copying the same basic code over and over again I figured I should make it in to a simple library for my own use.</p>
     <h3>Credits</h3>
