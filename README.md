@@ -10,14 +10,14 @@ It's really easy to use. Just include the egg.js file on the page...
 <script type="text/javascript" src="/path/to/egg.js"></script>
 ```
 
-...then use the `AddCode()` function to add in your easter eggs. You need to pass it the list of [keycodes](http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes), a function to trigger when it happens, and an optional set of metadata. Metadata can be anything from a string to an object. 
+...then use the `AddCode()` function to add in your easter eggs. You need to pass it the list of [keycodes](http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes), a function to trigger when it happens, and an optional set of metadata. Metadata can be anything from a string to an object.
 
 ```js
 var egg = new Egg();
 egg.AddCode("38,38,40,40,37,39,37,39,66,65", function() {
   jQuery('#egggif').fadeIn(500, function() {
     window.setTimeout(function() { jQuery('#egggif').hide(); }, 5000);
-  });
+  }, "konami-code");
 });
 egg.AddHook(function(){
   console.log("Hook called for: " + this.activeEgg.keys);
