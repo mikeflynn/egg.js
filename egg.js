@@ -10,10 +10,14 @@ function Egg() {
 // Keycode lookup: http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 Egg.prototype.AddCode = function(keys, fn, metadata) {
   this.eggs.push({keys: keys, fn: fn, metadata: metadata});
+
+  return this;
 }
 
 Egg.prototype.AddHook = function(fn) {
   this.hooks.push(fn);
+
+  return this;
 }
 
 Egg.prototype.Listen = function() {
