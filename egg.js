@@ -101,12 +101,12 @@ Egg.prototype.Listen = function() {
 }
 
 // EGGSAMPLE
- var egg = new Egg();
- egg
-   .AddCode("up,up,down,down,left,right,left,right,b,a", function() {
-     alert("Konami!");
-   }, "konami-code")
-  .AddHook(function(){
-     console.log("Hook called for: " + this.activeEgg.keys);
-     console.log(this.activeEgg.metadata);
-   }).Listen();
+// var egg = new Egg();
+// egg
+//   .AddCode("up,up,down,down,left,right,left,right,b,a", function() {
+//     alert("Konami!");
+//   }, "konami-code")
+//  .AddHook(function(){
+//     console.log("Hook called for: " + this.activeEgg.keys);
+//     console.log(this.activeEgg.metadata);
+//   }).Listen();
