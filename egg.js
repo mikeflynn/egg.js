@@ -17,28 +17,27 @@ Egg.prototype.AddHook = function(fn) {
 }
 
 Egg.prototype.Listen = function() {
-  var $this = this;
   if(window.addEventListener) {
     window.addEventListener("keydown", function(e) {
-      $this.kps.push(e.keyCode);
+      this.kps.push(e.keyCode);
 
-      for(i in $this.eggs) {
-        if($this.kps.toString().indexOf($this.eggs[i].keys) >= 0) {
+      this.eggs.forEach(function(v, i, a) {
+        if(this.kps.toString().indexOf(this.eggs[i].keys) >= 0) {
           // Call the fired egg function
-          $this.activeEgg = $this.eggs[i];
-          $this.eggs[i].fn.call();
+          this.activeEgg = this.eggs[i];
+          this.eggs[i].fn();
 
           // Call the hooks
-          for(x in $this.hooks) {
-            $this.hooks[x].call($this);
-          }
+          this.hooks.forEach(function(hook, i, a) {
+            hook.call(this);
+          }.bind(this));
 
           // Reset
-          $this.kps = [];
-          $this.activeEgg = '';
+          this.kps = [];
+          this.activeEgg = '';
         }
-      }
-    });
+      }.bind(this));
+    }.bind(this));
   }
 }
 
