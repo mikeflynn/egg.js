@@ -23,8 +23,8 @@ egg
   .AddHook(function(){
     console.log("Hook called for: " + this.activeEgg.keys);
     console.log(this.activeEgg.metadata);
-  });
-egg.Listen();
+  })
+  .Listen();
 ```
 
 You can also define the easter egg using the constructor:
