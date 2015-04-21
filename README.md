@@ -10,19 +10,20 @@ It's really easy to use. Just include the egg.js file on the page...
 <script type="text/javascript" src="/path/to/egg.js"></script>
 ```
 
-...then use the `AddCode()` function to add in your easter eggs. You need to pass it the character sequence to trigger the easter egg callback, a function to trigger when it happens, and an optional set of metadata. Metadata can be anything from a string to an object.
+...then use the `AddCode()` function to add in your easter eggs. You need to pass it the character sequence to trigger the easter egg callback (which can either be in plain English or Javascript key codes), a function to trigger when it happens, and an optional set of metadata. Metadata can be anything from a string to an object.
 
 ```js
 var egg = new Egg();
-egg.AddCode("up,up,down,down,left,right,left,right,b,a", function() {
-  jQuery('#egggif').fadeIn(500, function() {
-    window.setTimeout(function() { jQuery('#egggif').hide(); }, 5000);
-  }, "konami-code");
-});
-egg.AddHook(function(){
-  console.log("Hook called for: " + this.activeEgg.keys);
-  console.log(this.activeEgg.metadata);
-});
+egg
+  .AddCode("up,up,down,down,left,right,left,right,b,a", function() {
+    jQuery('#egggif').fadeIn(500, function() {
+      window.setTimeout(function() { jQuery('#egggif').hide(); }, 5000);
+    }, "konami-code");
+  })
+  .AddHook(function(){
+    console.log("Hook called for: " + this.activeEgg.keys);
+    console.log(this.activeEgg.metadata);
+  });
 egg.Listen();
 ```
 
@@ -45,5 +46,5 @@ I put an easter egg in pretty much everything I make and after copying the same 
 
 ### Credits
 
-Created by Mike Flynn / [@thatmikeflynn](http://twitter.com/thatmikeflynn)
+Created by Mike Flynn / [@thatmikeflynn](http://twitter.com/thatmikeflynn) and Rob McVey / [@negative_sleep](http://twitter.com/negative_sleep)
 
