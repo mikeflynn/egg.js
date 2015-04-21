@@ -34,7 +34,7 @@ Egg.prototype.__toCharCodes = function(keys) {
 
   var characterKeyCodes = keys.map(function(key) {
     // check if it's already a keycode
-    if(Number.isInteger(parseInt(key, 10))) {
+    if(key === parseInt(key, 10)) {
       return key;
     }
 
