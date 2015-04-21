@@ -10,11 +10,11 @@ It's really easy to use. Just include the egg.js file on the page...
 <script type="text/javascript" src="/path/to/egg.js"></script>
 ```
 
-...then use the `AddCode()` function to add in your easter eggs. You need to pass it the list of [keycodes](http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes), a function to trigger when it happens, and an optional set of metadata. Metadata can be anything from a string to an object.
+...then use the `AddCode()` function to add in your easter eggs. You need to pass it the character sequence to trigger the easter egg callback, a function to trigger when it happens, and an optional set of metadata. Metadata can be anything from a string to an object.
 
 ```js
 var egg = new Egg();
-egg.AddCode("38,38,40,40,37,39,37,39,66,65", function() {
+egg.AddCode("up,up,down,down,left,right,left,right,b,a", function() {
   jQuery('#egggif').fadeIn(500, function() {
     window.setTimeout(function() { jQuery('#egggif').hide(); }, 5000);
   }, "konami-code");
@@ -24,6 +24,16 @@ egg.AddHook(function(){
   console.log(this.activeEgg.metadata);
 });
 egg.Listen();
+```
+
+You can also define the easter egg using the constructor:
+
+```js
+var egg = new Egg("up,up,down,down,left,right,left,right,b,a", function() {
+  jQuery('#egggif').fadeIn(500, function() {
+    window.setTimeout(function() { jQuery('#egggif').hide(); }, 5000);
+  }, "konami-code");
+}).Listen();
 ```
 
 You can also add a hook, as shown above using `AddHook()`, that will run after any egg code is triggered. You could use it to fire a Google Analytics event or send out a tweet that someone finally found your easter egg. Hooks get access to the whole Egg.js object so you can pull information about the easter egg that fired via `this.activeEgg`
@@ -36,3 +46,4 @@ I put an easter egg in pretty much everything I make and after copying the same 
 ### Credits
 
 Created by Mike Flynn / [@thatmikeflynn](http://twitter.com/thatmikeflynn)
+
