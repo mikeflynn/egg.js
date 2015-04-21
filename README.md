@@ -6,7 +6,7 @@ Egg.js is a simple JS library that has no prerequisites and allows you to easily
 
 It's really easy to use. Just include the egg.js file on the page...
 
-```
+```html
 <script type="text/javascript" src="/path/to/egg.js"></script>
 ```
 
