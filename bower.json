@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "homepage": "https://github.com/mikeflynn/egg.js",
   "authors": [
-    "Mike Flynn <mfflynn@gmail.com>"
+    "Mike Flynn <mfflynn@gmail.com>",
+    "Rob McVey <mcvey.rob@gmail.com>"
   ],
   "description": "A simple javascript library to add easter eggs to web pages.",
   "keywords": [
