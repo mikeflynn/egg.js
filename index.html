@@ -8,7 +8,7 @@
   <script type="text/javascript" src="https://rawgit.com/mikeflynn/egg.js/master/egg.min.js"></script>
   <script type="text/javascript">
     var egg = new Egg();
-    egg.AddCode("38,38,40,40,37,39,37,39,66,65", function() {
+    egg.AddCode("up,up,down,down,left,right,left,right,b,a", function() {
       jQuery('#egggif').fadeIn(500, function() {
         window.setTimeout(function() { jQuery('#egggif').hide(); }, 5000);
       });
@@ -34,26 +34,38 @@
 
     <h3>Example</h3>
     <p>It's really easy to use. Just include the egg.js file on the page...</p>
-    <pre>&lt;script type="text/javascript" src="<a href="http://thatmikeflynn.com/egg.js/egg.js">http://thatmikeflynn.com/egg.js/egg.js</a>"&gt;&lt;/script&gt;</pre>
-    <p>...then use the AddCode() function to add in your easter eggs. You need to pass it the list of keycodes (<a href="http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes">reference</a>), a function to trigger when it happens, and then an optional set of metadata, which can be anything from a string to an object. </p>
+    <pre>&lt;script type="text/javascript" src="<a href="https://github.com/mikeflynn/egg.js/blob/master/egg.js">http://thatmikeflynn.com/egg.js/egg.min.js</a>"&gt;&lt;/script&gt;</pre>
+    <p>...then use the AddCode() function to add in your easter eggs. You don't need to know the special Javascript key codes, as you can use plain English to define your egg (but you can use key codes if you want to). You'll also need a function to trigger when it happens, and then an optional set of metadata, which can be anything from a string to an object. </p>
     <pre>
 var egg = new Egg();
-egg.AddCode("38,38,40,40,37,39,37,39,66,65", function() {
-  jQuery('#egggif').fadeIn(500, function() {
-    window.setTimeout(function() { jQuery('#egggif').hide(); }, 5000);
-  });
-});
-egg.AddHook(function(){
-  console.log("Hook called for: " + this.activeEgg.keys);
-  console.log(this.activeEgg.metadata);
-});
-egg.Listen();
+egg
+  .AddCode("up,up,down,down,left,right,left,right,b,a", function() {
+    jQuery('#egggif').fadeIn(500, function() {
+      window.setTimeout(function() { jQuery('#egggif').hide(); }, 5000);
+    });
+  })
+  .AddHook(function(){
+    console.log("Hook called for: " + this.activeEgg.keys);
+    console.log(this.activeEgg.metadata);
+  })
+  .Listen();
     </pre>
     <p>You can also add a hook, as shown above using AddHook(), that will run after any egg code is triggered. You could use it to fire a Google Analytics event or send out a tweet that someone finally found your easter egg. Hooks get access to the whole Egg.js object so you can pull information about the easter egg that fired via this.activeEgg</p>
     <h3>Why?</h3>
     <p>I put an easter egg in pretty much everything I make and after copying the same basic code over and over again I figured I should make it in to a simple library for my own use.</p>
     <h3>Credits</h3>
-    <p>Created by Mike Flynn (<a href="http://twitter.com/thatmikeflynn">@thatmikeflynn</a>)</p>
+    <p>Created by Mike Flynn (<a href="http://twitter.com/thatmikeflynn">@thatmikeflynn</a>) and Rob McVey (<a href="http://twitter.com/negative_sleep">@negative_sleep</a>)</p>
   </div>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-51642712-3', 'auto');
+    ga('send', 'pageview');
+
+  </script>
 </body>
 </html>
