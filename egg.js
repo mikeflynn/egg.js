@@ -63,8 +63,8 @@ Egg.prototype.AddHook = function(fn) {
 }
 
 Egg.prototype.handleEvent = function(e) {
-  var keyCode = e.which;
-
+  var keyCode  = e.which;
+  var isLetter = keyCode >= 65 && keyCode <= 90;
   /*
     This prevents find as you type in Firefox.
     Only prevent default behavior for letters A-Z.
@@ -73,16 +73,15 @@ Egg.prototype.handleEvent = function(e) {
   if ( e.type === "keydown" && !e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey ) {
     var tag = e.target.tagName;
 
-    if ( ( tag === "HTML" || tag === "BODY" ) && keyCode >= 65 && keyCode <= 90 ) {
+    if ( ( tag === "HTML" || tag === "BODY" ) && isLetter ) {
       e.preventDefault();
       return;
     }
   }
 
   if ( e.type === "keyup" && this.eggs.length > 0 ) {
-
     // keydown defaults all letters to uppercase
-    if(keyCode >= 65 && keyCode <= 90) {
+    if(isLetter) {
       if(!e.shiftKey) {
         // convert to lower case letter
         keyCode = keyCode + 32;
@@ -110,9 +109,7 @@ Egg.prototype.handleEvent = function(e) {
         this.activeEgg = '';
       }
     }, this);
-
   }
-
 };
 
 Egg.prototype.Listen = function() {
@@ -121,6 +118,8 @@ Egg.prototype.Listen = function() {
     document.addEventListener( "keydown", this, false );
     document.addEventListener( "keyup", this, false );
   }
+
+  return this;
 };
 
 // EGGSAMPLE
