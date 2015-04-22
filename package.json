@@ -19,7 +19,7 @@
     "konami code"
   ],
   "author": "Mike Flynn",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mikeflynn/egg.js/issues"
   },
