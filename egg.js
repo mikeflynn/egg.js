@@ -62,43 +62,66 @@ Egg.prototype.AddHook = function(fn) {
   return this;
 }
 
-Egg.prototype.Listen = function() {
-  if(window.addEventListener) {
-    window.addEventListener("keydown", function keydownHandler(e) {
-      var keyCode = e.keyCode;
-      // keydown defaults all letters to uppercase
-      if(keyCode >= 65 && keyCode <= 90) {
-        if(!e.shiftKey) {
-          // convert to lower case letter
-          keyCode = keyCode + 32;
-        }
-      }
+Egg.prototype.handleEvent = function(e) {
+  var keyCode = e.which;
 
-      // make sure that it's not an ignored key (shift for one)
-      if(this.ignoredKeys.indexOf(keyCode) === -1) {
-        this.kps.push(keyCode);
-      }
+  /*
+    This prevents find as you type in Firefox.
+    Only prevent default behavior for letters A-Z.
+    I want keys like page up/down to still work.
+  */
+  if ( e.type === "keydown" && !e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey ) {
+    var tag = e.target.tagName;
 
-      this.eggs.forEach(function(currentEgg, i) {
-        var foundEgg = this.kps.toString().indexOf(currentEgg.keys) >= 0;
-
-        if(foundEgg) {
-          // Reset keys; if more keypresses occur while the callback is executing, it could retrigger the match
-          this.kps = [];
-          // Set the activeEgg to this one
-          this.activeEgg = currentEgg;
-          // if callback is a function, call it
-          this.__execute(currentEgg.fn, this);
-          // Call the hooks
-          this.hooks.forEach(this.__execute, this);
-          
-          this.activeEgg = '';
-        }
-      }, this);
-
-    }.bind(this));
+    if ( ( tag === "HTML" || tag === "BODY" ) && keyCode >= 65 && keyCode <= 90 ) {
+      e.preventDefault();
+      return;
+    }
   }
-}
+
+  if ( e.type === "keyup" && this.eggs.length > 0 ) {
+
+    // keydown defaults all letters to uppercase
+    if(keyCode >= 65 && keyCode <= 90) {
+      if(!e.shiftKey) {
+        // convert to lower case letter
+        keyCode = keyCode + 32;
+      }
+    }
+
+    // make sure that it's not an ignored key (shift for one)
+    if(this.ignoredKeys.indexOf(keyCode) === -1) {
+      this.kps.push(keyCode);
+    }
+
+    this.eggs.forEach(function(currentEgg, i) {
+      var foundEgg = this.kps.toString().indexOf(currentEgg.keys) >= 0;
+
+      if(foundEgg) {
+        // Reset keys; if more keypresses occur while the callback is executing, it could retrigger the match
+        this.kps = [];
+        // Set the activeEgg to this one
+        this.activeEgg = currentEgg;
+        // if callback is a function, call it
+        this.__execute(currentEgg.fn, this);
+        // Call the hooks
+        this.hooks.forEach(this.__execute, this);
+        
+        this.activeEgg = '';
+      }
+    }, this);
+
+  }
+
+};
+
+Egg.prototype.Listen = function() {
+  // Standards compliant only. Don't waste time on IE8.
+  if ( document.addEventListener !== void 0 ) {
+    document.addEventListener( "keydown", this, false );
+    document.addEventListener( "keyup", this, false );
+  }
+};
 
 // EGGSAMPLE
 // var egg = new Egg();
