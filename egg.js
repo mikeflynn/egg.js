@@ -142,6 +142,10 @@ Egg.prototype.Listen = function() {
   return this;
 };
 
+Egg.prototype.listen  = Egg.prototype.Listen;
+Egg.prototype.addCode = Egg.prototype.AddCode;
+Egg.prototype.addHook = Egg.prototype.AddHook;
+
 // EGGSAMPLE
 // var egg = new Egg();
 // egg
