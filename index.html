@@ -49,14 +49,16 @@ egg
     console.log(this.activeEgg.metadata);
   }).listen();
     </pre>
-    You can add an easter egg via the constructor:
+    <p>You can also add a hook, as shown above using addHook(), that will run after any egg code is triggered. You could use it to fire a Google Analytics event or send out a tweet that someone finally found your easter egg. Hooks get access to the whole Egg.js object so you can pull information about the easter egg that fired via this.activeEgg</p>
+
+    <p>Even more simply, you can just add an easter egg via the constructor:</p>
     <pre>
 var egg = new Egg("up,up,down,down,left,right,left,right,b,a", function() {
   jQuery('#egggif').fadeIn(500, function() {
     window.setTimeout(function() { jQuery('#egggif').hide(); }, 5000);
   });
 }).listen();</pre>
-    <p>You can also add a hook, as shown above using addHook(), that will run after any egg code is triggered. You could use it to fire a Google Analytics event or send out a tweet that someone finally found your easter egg. Hooks get access to the whole Egg.js object so you can pull information about the easter egg that fired via this.activeEgg</p>
+
     <h3>Why?</h3>
     <p>I put an easter egg in pretty much everything I make and after copying the same basic code over and over again I figured I should make it in to a simple library for my own use.</p>
     <h3>Credits</h3>
