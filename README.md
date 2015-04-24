@@ -39,6 +39,8 @@ var egg = new Egg("up,up,down,down,left,right,left,right,b,a", function() {
 
 You can also add a hook, as shown above using `addHook()`, that will run after any egg code is triggered. You could use it to fire a Google Analytics event or send out a tweet that someone finally found your easter egg. Hooks get access to the whole Egg.js object so you can pull information about the easter egg that fired via `this.activeEgg`
 
+You can see a live example of this on `egg.js` [website](http://thatmikeflynn.com/egg.js/).
+
 
 ### Why?
 
