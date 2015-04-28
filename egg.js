@@ -1,30 +1,31 @@
 // thatmikeflynn.com/egg.js/
 /*
-Copyright (c) 2015 Mike Flynn
+ Copyright (c) 2015 Mike Flynn
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
  */
 function Egg(/* keySequence, fn, metadata */) {
   this.eggs = [];
   this.hooks = [];
   this.kps = [];
   this.activeEgg = '';
+  this.keySequenceLength = 0;
   // for now we'll just ignore the shift key to allow capital letters
   this.ignoredKeys = [16];
 
@@ -36,14 +37,14 @@ function Egg(/* keySequence, fn, metadata */) {
 // attempt to call passed function bound to Egg object instance
 Egg.prototype.__execute = function(fn) {
   return typeof fn === 'function' && fn.call(this);
-}
+};
 
 // converts literal character values to keyCodes
 Egg.prototype.__toCharCodes = function(keys) {
   var special = {
-      "up": 38, "down": 40, "left": 37, "right": 39, "enter": 13, "space": 32, "ctrl": 7, "alt": 8, "tab": 9
-    },
-    specialKeys = Object.keys(special);
+        "up": 38, "down": 40, "left": 37, "right": 39, "enter": 13, "space": 32, "ctrl": 7, "alt": 8, "tab": 9
+      },
+      specialKeys = Object.keys(special);
 
   if(typeof keys === 'string') {
     // make sure there isn't any whitespace
@@ -67,29 +68,30 @@ Egg.prototype.__toCharCodes = function(keys) {
   });
 
   return characterKeyCodes.join(',');
-}
+};
 
 // Keycode lookup: http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 Egg.prototype.AddCode = function(keys, fn, metadata) {
-  this.eggs.push({keys: this.__toCharCodes(keys), fn: fn, metadata: metadata});
-
+  var keySequence = this.__toCharCodes(keys);
+  this.keySequenceLength = keySequence.split(',').length;
+  this.eggs.push({keys: keySequence, fn: fn, metadata: metadata});
   return this;
-}
+};
 
 Egg.prototype.AddHook = function(fn) {
   this.hooks.push(fn);
 
   return this;
-}
+};
 
 Egg.prototype.handleEvent = function(e) {
   var keyCode  = e.which;
   var isLetter = keyCode >= 65 && keyCode <= 90;
   /*
-    This prevents find as you type in Firefox.
-    Only prevent default behavior for letters A-Z.
-    I want keys like page up/down to still work.
-  */
+   This prevents find as you type in Firefox.
+   Only prevent default behavior for letters A-Z.
+   I want keys like page up/down to still work.
+   */
   if ( e.type === "keydown" && !e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey ) {
     var tag = e.target.tagName;
 
@@ -114,6 +116,9 @@ Egg.prototype.handleEvent = function(e) {
     }
 
     this.eggs.forEach(function(currentEgg, i) {
+      if(this.kps.length > this.keySequenceLength){
+        this.kps.shift();
+      }
       var foundEgg = this.kps.toString().indexOf(currentEgg.keys) >= 0;
 
       if(foundEgg) {
@@ -125,7 +130,7 @@ Egg.prototype.handleEvent = function(e) {
         this.__execute(currentEgg.fn, this);
         // Call the hooks
         this.hooks.forEach(this.__execute, this);
-        
+
         this.activeEgg = '';
       }
     }, this);
