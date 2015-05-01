@@ -25,7 +25,6 @@ function Egg(/* keySequence, fn, metadata */) {
   this.hooks = [];
   this.kps = [];
   this.activeEgg = '';
-  this.keyMaxLength = 0;
   // for now we'll just ignore the shift key to allow capital letters
   this.ignoredKeys = [16];
 
@@ -72,12 +71,7 @@ Egg.prototype.__toCharCodes = function(keys) {
 
 // Keycode lookup: http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 Egg.prototype.AddCode = function(keys, fn, metadata) {
-  var keySequence = this.__toCharCodes(keys);
-  var keysLength = keySequence.split(',').length;
-  if (this.keyMaxLength < keysLength){
-    this.keyMaxLength = keysLength;
-  }
-  this.eggs.push({keys: keySequence, fn: fn, metadata: metadata});
+  this.eggs.push({keys: this.__toCharCodes(keys), fn: fn, metadata: metadata});
 
   return this;
 }
@@ -117,9 +111,6 @@ Egg.prototype.handleEvent = function(e) {
     // make sure that it's not an ignored key (shift for one)
     if(this.ignoredKeys.indexOf(keyCode) === -1) {
       this.kps.push(keyCode);
-	  if (this.kps.length > this.keyMaxLength) {
-        this.kps.shift();
-      }
     }
 
     this.eggs.forEach(function(currentEgg, i) {
@@ -134,7 +125,7 @@ Egg.prototype.handleEvent = function(e) {
         this.__execute(currentEgg.fn, this);
         // Call the hooks
         this.hooks.forEach(this.__execute, this);
-
+        
         this.activeEgg = '';
       }
     }, this);
