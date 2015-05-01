@@ -49,4 +49,3 @@ I put an easter egg in pretty much everything I make and after copying the same 
 ### Credits
 
 Created by Mike Flynn / [@thatmikeflynn](http://twitter.com/thatmikeflynn) and Rob McVey / [@negative_sleep](http://twitter.com/negative_sleep)
-
