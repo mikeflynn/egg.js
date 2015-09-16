@@ -41,7 +41,7 @@ Egg.prototype.__execute = function(fn) {
 // converts literal character values to keyCodes
 Egg.prototype.__toCharCodes = function(keys) {
   var special = {
-      "up": 38, "down": 40, "left": 37, "right": 39, "enter": 13, "space": 32, "ctrl": 17, "alt": 18, "tab": 9
+      "up": 38, "down": 40, "left": 37, "right": 39, "enter": 13, "space": 32, "ctrl": 17, "alt": 18, "tab": 9, "esc": 27
     },
     specialKeys = Object.keys(special);
 
@@ -125,7 +125,7 @@ Egg.prototype.handleEvent = function(e) {
         this.__execute(currentEgg.fn, this);
         // Call the hooks
         this.hooks.forEach(this.__execute, this);
-        
+
         this.activeEgg = '';
       }
     }, this);
