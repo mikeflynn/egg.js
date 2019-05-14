@@ -9,8 +9,10 @@ Egg.js is a simple JS library that has no prerequisites and allows you to easily
 It's really easy to use. Just include the egg.js file on the page...
 
 ```html
-<script type="text/javascript" src="/path/to/egg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/egg.js/1.0/egg.min.js"></script>
 ```
+
+(Thanks to Cloudflare for hosting the library!)
 
 ...then use the `addCode()` function to add in your easter eggs. You need to pass it the character sequence to trigger the easter egg callback (which can either be in plain English or Javascript key codes), a function to trigger when it happens, and an optional set of metadata. Metadata can be anything from a string to an object.
 
