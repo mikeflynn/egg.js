@@ -36,7 +36,7 @@ function Egg(/* keySequence, fn, metadata */) {
 // attempt to call passed function bound to Egg object instance
 Egg.prototype.__execute = function(fn) {
   return typeof fn === 'function' && fn.call(this);
-}
+};
 
 // converts literal character values to keyCodes
 Egg.prototype.__toCharCodes = function(keys) {
@@ -67,20 +67,20 @@ Egg.prototype.__toCharCodes = function(keys) {
   });
 
   return characterKeyCodes.join(',');
-}
+};
 
 // Keycode lookup: http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 Egg.prototype.AddCode = function(keys, fn, metadata) {
   this.eggs.push({keys: this.__toCharCodes(keys), fn: fn, metadata: metadata});
 
   return this;
-}
+};
 
 Egg.prototype.AddHook = function(fn) {
   this.hooks.push(fn);
 
   return this;
-}
+};
 
 Egg.prototype.handleEvent = function(e) {
   var keyCode  = e.which;
@@ -142,9 +142,21 @@ Egg.prototype.Listen = function() {
   return this;
 };
 
+Egg.prototype.Destroy = function() {
+  if ( document.removeEventListener !== void 0 ) {
+    document.removeEventListener( "keydown", this, false );
+    document.removeEventListener( "keyup", this, false );
+  }
+
+  return this;
+};
+
 Egg.prototype.listen  = Egg.prototype.Listen;
 Egg.prototype.addCode = Egg.prototype.AddCode;
 Egg.prototype.addHook = Egg.prototype.AddHook;
+Egg.prototype.destroy = Egg.prototype.Destroy;
+
+module.exports = Egg;
 
 // EGGSAMPLE
 // var egg = new Egg();
