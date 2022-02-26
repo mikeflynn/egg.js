@@ -1,6 +1,6 @@
 # `Egg.js`
 
-![Egg.js](http://thatmikeflynn.com/egg.js/eggjs.png)
+![Egg.js](https://mikeflynn.github.io/egg.js/eggjs.png)
 
 Egg.js is a simple JS library that has no prerequisites and allows you to easily add web easter eggs by watching the user's key strokes.
 
